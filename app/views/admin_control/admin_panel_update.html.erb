@@ -1,0 +1,29 @@
+<div class="main-agileinfo">
+  <div class="agileits-top">
+    <h1>Update User</h1>
+    <%= form_tag edit_user_path do |user| %>
+      <div class="field">
+        <%=label_tag :prev_email,"Previous Email" %>
+        <%=email_field_tag :prev_email %>
+      </div>
+      <div class="field">
+        <%= label_tag :email ,"New Email"%>
+        <%= email_field_tag :email %>
+      </div>
+      <div class="field">
+        <%= label_tag :password,"Password (6 characters minimum)" %>
+        <%= password_field_tag :password%>
+      </div>
+      <div class="field">
+        <%=label_tag :password_confirmation,"Password Confirmation" %>
+        <%=password_field_tag :Password_confirmation %>
+      </div>
+      <div class="actions">
+        <%= submit_tag "Edit User" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="text-center">
+  <%= link_to 'Back',panel_path,class: "btn btn-default" %>
+</div>

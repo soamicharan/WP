@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+<h1>Admin Pages</h1>
+<div class="table-responsive table-bordered">
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Email</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @all_email.each do |mail| %>
+      <tr>
+        <td><%= mail.email %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+<div class="text-center">
+  <br>
+<%= link_to 'Create User', panel_create_path, class:"btn btn-default" %> |
+<%= link_to 'Edit User', panel_edit_path,class:"btn btn-info" %> |
+<%= link_to 'Delete User',panel_delete_path,class:"btn btn-warning" %><br><br>
+<%= link_to 'Back',candidate_details_path,class: "btn btn-default" %>
+</div>

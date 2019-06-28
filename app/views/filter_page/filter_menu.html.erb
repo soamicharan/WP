@@ -1,0 +1,175 @@
+<h1>Filter Menu</h1>
+    <%= form_tag filter_result_path do |form| %>
+      <div class="table-responsive table-bordered">
+        <table class="table">
+          <tbody>
+          <tr>
+            <td>
+              <div class="field">
+                <%= label_tag :s_no ,"S.No."%><br>
+                <%= number_field_tag :s_no %>
+              </div>
+            </td>
+            <td>
+              <div class="field">
+                <%= label_tag :src_reg,"Source of registration" %>
+                <%= text_field_tag :src_reg %>
+              </div>
+            </td>
+            <td>
+              <div class="field">
+                <%= label_tag :zone ,"Zone"%>
+                <%= text_field_tag :zone %>
+              </div>
+            </td>
+            <td>
+              <div class="field">
+                <%= label_tag :DOR ,"Date of registration"%><br>
+                <%= date_field_tag :DOR %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="field">
+                <%= label_tag :reg_no ,"Registration number"%>
+                <%= text_field_tag :reg_no %>
+              </div>
+            </td>
+            <td>
+              <div class="field">
+                <%= label_tag :name ,"Name"%>
+                <%= text_field_tag :name %>
+              </div>
+            </td>
+            <td>
+              <div class="field">
+                <%= label_tag :gender,"Gender" %>
+                <%= text_field_tag :gender %>
+              </div>
+            </td>
+            <td>
+              <div class="field">
+                <%= label_tag :age ,"Age"%><br>
+                <%= number_field_tag :age %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="field">
+                <%= label_tag :address ,"Address"%><br>
+                <%= text_area_tag :address %>
+              </div>
+            </td>
+            <td>
+              <div class="field">
+                <%= label_tag :branch,"Branch" %>
+                <%= text_field_tag :branch %>
+              </div>
+            </td>
+            <td>
+              <div class="field">
+                <%= label_tag :email,"Email" %>
+                <%= text_field_tag :email %>
+              </div>
+            </td>
+            <td>
+              <div class="field">
+                <%= label_tag :contact_no,"Contact number" %><br>
+                <%= number_field_tag :contact_no %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="field">
+                <%= label_tag :state,"State" %><br>
+                <%= select_tag :state,options_for_select( ["Andhra Pradesh",
+                                         "Arunachal Pradesh",
+                                         "Assam",
+                                         "Bihar",
+                                         "Chhattisgarh",
+                                         "Chandigarh",
+                                         "Dadra and Nagar Haveli",
+                                         "Daman and Diu",
+                                         "Delhi",
+                                         "Goa",
+                                         "Gujarat",
+                                         "Haryana",
+                                         "Himachal Pradesh",
+                                         "Jammu and Kashmir",
+                                         "Jharkhand",
+                                         "Karnataka",
+                                         "Kerala",
+                                         "Madhya Pradesh",
+                                         "Maharashtra",
+                                         "Manipur",
+                                         "Meghalaya",
+                                         "Mizoram",
+                                         "Nagaland",
+                                         "Orissa",
+                                         "Punjab",
+                                         "Pondicherry",
+                                         "Rajasthan",
+                                         "Sikkim",
+                                         "Tamil Nadu",
+                                         "Tripura",
+                                         "Uttar Pradesh",
+                                         "Uttarakhand",
+                                         "West Bengal"]),:include_blank=>true%>
+              </div>
+            </td>
+            <td>
+              <div class="field">
+                <%= label_tag :qualification,"Qualification" %>
+                <%= text_field_tag :qualification %>
+              </div>
+            </td>
+            <td>
+              <div class="field">
+                <%= label_tag :specialization ,"Specialization"%>
+                <%= text_field_tag :specialization %>
+              </div>
+            </td>
+            <td>
+              <div class="field">
+                <%= label_tag :experience,"Experience" %>
+                <%= text_field_tag :experience %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="field">
+                <%= label_tag :remarks_mobility ,"Remarks Mobility"%><br>
+                <%= select_tag :remarks_mobility,options_for_select([1,2,3,4,5,6,7,8,9,10]),:include_blank=>true %>
+              </div>
+            </td>
+            <td>
+              <div class="field">
+                <%= label_tag :DOC ,"Date of closure"%><br>
+                <%= date_field_tag :DOC%>
+              </div>
+            </td>
+            <td>
+              <div class="field">
+                <%= label_tag :status,"Status" %><br>
+                <%= select_tag :status,options_for_select(["Pending","Joined","Joining","Studying","Not interested","Not responding"]),:include_blank=>true %>
+              </div>
+            </td>
+            <td>
+
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="actions">
+        <%= submit_tag "Filter"%>
+      </div>
+    <% end %>
+
+<div class="text-center">
+  <%=link_to "Back",candidate_details_path,class: "btn btn-default" %>
+</div>

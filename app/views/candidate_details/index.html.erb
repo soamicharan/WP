@@ -1,0 +1,41 @@
+<h1>Candidate Details</h1>
+<div class="table-responsive table-bordered">
+<table class="table">
+  <thead>
+    <tr>
+      <th>S.No.</th>
+      <th>Registration Number</th>
+      <th>Name</th>
+      <th>Branch</th>
+      <th>Email</th>
+      <th>Contact Number</th>
+      <th>Status</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @candidate_details.each do |candidate_detail| %>
+      <tr>
+        <td><%= candidate_detail.id %></td>
+        <td><%= candidate_detail.reg_no %></td>
+        <td><%= candidate_detail.name %></td>
+        <td><%= candidate_detail.branch %></td>
+        <td><%= candidate_detail.email %></td>
+        <td><%= candidate_detail.contact_no %></td>
+        <td><%= candidate_detail.status %></td>
+        <td><%= link_to 'Read', candidate_detail,class:"btn btn-default" %>
+        | <%= link_to 'Update', edit_candidate_detail_path(candidate_detail),class:"btn btn-info" %>
+        | <%= link_to 'Delete', candidate_detail, method: :delete, data: { confirm: 'Are you sure?' },class:"btn btn-warning" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<br>
+<div class="text-center">
+<%= link_to 'Create', new_candidate_detail_path,class:"btn btn-default"%> |
+<%= link_to 'Filter',filter_path,class:"btn btn-default"%>
+  <%if current_user && current_user.admin %>
+    | <%=link_to "Admin Panel", panel_path,class: "btn btn-default" %>
+  <%end %>
+</div>

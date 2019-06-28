@@ -1,0 +1,60 @@
+<h1>Filter Result</h1>
+<p class="alert alert-success"><%=@filter_count %> records found.</p>
+<div class="table-responsive table-bordered">
+  <table class="table">
+    <thead>
+    <tr>
+      <th>S.No.</th>
+      <th>Source of Registration</th>
+      <th>Zone</th>
+      <th>Date of Registration</th>
+      <th>Registration Number</th>
+      <th>Name</th>
+      <th>Gender</th>
+      <th>Age</th>
+      <th>Address</th>
+      <th>Branch</th>
+      <th>Email</th>
+      <th>Contact Number</th>
+      <th>State</th>
+      <th>Qualification</th>
+      <th>Specialization</th>
+      <th>Experience</th>
+      <th>Remarks Mobility</th>
+      <th>Date of Closure</th>
+      <th>Status</th>
+      <th colspan="2"></th>
+    </tr>
+    </thead>
+    <tbody>
+      <% @filter_result.each do |result| %>
+      <tr>
+        <td><%=result.s_no %> </td>
+        <td><%=result.src_reg %> </td>
+        <td><%=result.zone %> </td>
+        <td><%=result.DOR %> </td>
+        <td><%=result.reg_no %> </td>
+        <td><%=result.name %> </td>
+        <td><%=result.gender %> </td>
+        <td><%=result.age %> </td>
+        <td><%=result.address %> </td>
+        <td><%=result.branch %> </td>
+        <td><%=result.email %> </td>
+        <td><%=result.contact_no %> </td>
+        <td><%=result.state %> </td>
+        <td><%=result.qualification %> </td>
+        <td><%=result.specialization %> </td>
+        <td><%=result.experience %> </td>
+        <td><%=result.remarks_mobility %> </td>
+        <td><%=result.DOC %> </td>
+        <td><%=result.status %> </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<br>
+<div class="text-center">
+  <%=link_to "Back",filter_path,class: "btn btn-default" %>
+</div>
+
