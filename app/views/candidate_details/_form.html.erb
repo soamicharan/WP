@@ -1,5 +1,10 @@
-<div class="main-agileinfo">
-<div class="agileits-top">
+<div class="container">
+<div class="contractForm">
+<div class-"card">
+<div class="row">
+<div class="col-sm-4">
+</div>
+<div class="col-sm-4">
 <%= form_with(model: candidate_detail, local: true) do |form| %>
   <% if candidate_detail.errors.any? %>
     <div class="alert alert-warning" >
@@ -11,41 +16,33 @@
       </ul>
     </div>
   <% end %>
-  <div class="field">
-    <%= form.label :DOR ,"Date of registration"%><br>
-    <%= form.date_select :DOR %>
+  <div class="form-group">
+    <span style="font-weight:bold;font-size:15px;">Date of Registration </span><br>
+    <%= form.date_select :DOR , {order: [:day, :month, :year]}, { class: "datetime" }%>
   </div>
-  <div class="field">
-    <%= form.label :name ,"Name"%>
-    <%= form.text_field :name %>
+  <div class="form-group">
+    <%= form.text_field :name,class: "form-control",placeholder: "Name" %>
   </div>
-  <div class="field">
-    <%= form.label :gender,"Gender" %>
-    <%= form.select :gender ,["Male","Female"]%>
+  <div class="form-group">
+    <%= form.select :gender ,["Select Gender","Male","Female"],{},{:class=> "form-control"}%>
   </div>
-  <div class="field">
-    <%= form.label :age ,"Age"%><br>
-    <%= form.number_field :age %>
+  <div class="form-group">
+    <%= form.number_field :age,class: "form-control",placeholder: "Age" %>
   </div>
-  <div class="field">
-    <%= form.label :branch,"Branch" %>
-    <%= form.text_field :branch %>
+  <div class="form-group">
+    <%= form.text_field :branch,class: "form-control",placeholder: "Branch" %>
   </div>
-  <div class="field">
-    <%= form.label :email,"Email" %>
-    <%= form.text_field :email %>
+  <div class="form-group">
+    <%= form.text_field :email,class: "form-control",placeholder: "Email" %>
   </div>
-  <div class="field">
-    <%= form.label :contact_no,"Contact number" %><br>
-    <%= form.number_field :contact_no %>
+  <div class="form-group">
+    <%= form.number_field :contact_no,class: "form-control",placeholder: "Contact number" %>
   </div>
-  <div class="field">
-    <%= form.label :address ,"Address"%><br>
-    <%= form.text_area :address %>
+  <div class="form-group">
+    <%= form.text_area :address ,class: "form-control",placeholder: "Address"%>
   </div>
-  <div class="field">
-    <%= form.label :state,"State " %><br>
-    <%= form.select :state, ["Andhra Pradesh",
+  <div class="form-group">
+    <%= form.select :state, ["Select State","Andhra Pradesh",
    "Arunachal Pradesh",
    "Assam",
    "Bihar",
@@ -77,39 +74,44 @@
    "Tripura",
    "Uttar Pradesh",
    "Uttarakhand",
-   "West Bengal"]%>
+   "West Bengal"],{},{:class=> "form-control"}%>
   </div>
-  <div class="field">
-    <%= form.label :zone ,"Zone"%>
-    <%= form.text_field :zone %>
+  <div class="form-group">
+    <%= form.text_field :zone,class: "form-control",placeholder: "Zone" %>
   </div>
-  <div class="field">
-    <%= form.label :qualification,"Qualification" %>
-    <%= form.text_field :qualification %>
+  <div class="form-group">
+    <%= form.text_field :qualification,class: "form-control",placeholder: "Qualification" %>
   </div>
-  <div class="field">
-    <%= form.label :specialization ,"Specialization"%>
-    <%= form.text_field :specialization %>
+  <div class="form-group">
+    <%= form.text_field :specialization,class: "form-control",placeholder: "Specialization" %>
   </div>
-  <div class="field">
-    <%= form.label :experience,"Experience" %>
-    <%= form.text_field :experience %>
+  <div class="form-group">
+    <%= form.text_field :experience,class: "form-control",placeholder: "Experience" %>
   </div>
-  <div class="field">
-    <%= form.label :remarks_mobility ,"Remarks Mobility"%><br>
-    <%= form.select :remarks_mobility,[1,2,3,4,5,6,7,8,9,10] %>
+  <div class="form-group">
+    <%= form.select :remarks_mobility,["Select Remarks",1,2,3,4,5,6,7,8,9,10] ,{},{:class=> "form-control"}%>
   </div>
-  <div class="field">
-    <%= form.label :DOC ,"Date of closure"%><br>
-    <%= form.date_select :DOC,:include_blank=>true%>
+  <div class="form-group">
+    <span style="font-weight:bold;font-size:15px;">Date of Closure </span><br>
+    <%= form.date_select :DOC, {order: [:day, :month, :year],:include_blank=>true }, { class: "datetime" }%>
   </div>
-  <div class="field">
-    <%= form.label :status,"Status" %><br>
-    <%= form.select :status,["Pending","Joined","Joining","Studying","Not interested","Not responding"] %>
+  <div class="form-group">
+    <%= form.select :status,["Pending","Joined","Joining","Studying","Not interested","Not responding"],{},{:class=> "form-control"}%>
   </div>
-  <div class="actions">
-    <%= form.submit%>
+  <div class="actions text-center">
+    <%= form.submit class:"btn btn-theme"%>
   </div>
 <% end %>
 </div>
 </div>
+</div>
+</div>
+</div>
+<style>
+.datetime {
+  width: 117.5px;
+  height: 30px;
+  text-indent: 15px; 
+}
+</style>
+

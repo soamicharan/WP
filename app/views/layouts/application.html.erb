@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>WorkProject34</title>
+    <title>WorkProject</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <link href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
@@ -24,7 +24,7 @@
         <div class="collapse navbar-collapse navbar-right">
           <ul class="nav navbar-nav">
 	    <% if user_signed_in? %>
-            <li class="active"><a href="#header">Dashboard</a></li>
+            <li><a href="#header">Dashboard</a></li>
             <li><a href="#feature">Candidate Details</a></li>
             <li><%= link_to 'Edit profile', edit_user_registration_path%></li>
             <li> <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'%></li>
