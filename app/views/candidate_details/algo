@@ -1,0 +1,46 @@
+unless params[:ff].nil?
+        param_list=[:fsrc_reg,:fzone,:fname,:fbranch,:fstate,:fremarks_mobility,:fstatus]
+	spec_param_list=[:SDOR,:EDOR,:SDOC,:EDOC]
+	spec_param_list=["DOR","DOC"]
+    	param_string=["src_reg","zone","name","branch","state","remarks_mobility","status"]
+    	param_query_list=[]
+    	param_query=""
+    	for i in (0..6)
+      		unless params[param_list[i]].blank?
+        		param_query_list.push(params[param_list[i]])
+        		param_query+=param_string[i]+"= ? and "
+		end
+      	end
+	unless params[:SDOR].blank? and params[:EDOR].blank?
+		param_query+="DOR between ? and ? and "
+	else
+		unless params[:EDOR].blank?
+			param_query+="DOR >= ? and "
+		end
+		unless params[:SDOR].blank?
+			param_query+="DOR<= ? and "
+		end
+	end
+	unless params[:SDOC].blank? and params[:EDOC].blank?
+		param_query+="DOC between ? and ? and "
+	else
+		unless params[:EDOC].blank?
+			param_query+="DOC >= ? and "
+		end
+		unless params[:SDOC].blank?
+			param_query+="DOC<= ? and "
+		end
+	end
+	
+	complete_sql_query="SELECT * FROM candidate_details WHERE "+param_query[0..param_query.length-5]+" ;"
+    	print complete_sql_query
+    	if param_query==""
+
+      		redirect_to candidate_details_path,notice: "Please fill at least one field."
+    	else
+      		@candidate_details=CandidateDetail.filter_result(complete_sql_query,param_query_list)
+      		@filter_count=CandidateDetail.filter_count(complete_sql_query,param_query_list)
+    	end
+	
+			
+    end

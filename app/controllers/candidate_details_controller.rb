@@ -3,7 +3,9 @@ class CandidateDetailsController < ApplicationController
   before_action :set_candidate_detail, only: [:show, :edit, :update, :destroy]
   
   def index
-    @candidate_details = CandidateDetail.all
+    @candidate_details = CandidateDetail.find_by_sql("SELECT * FROM candidate_details")
+    
+    
   end
   def show
   end

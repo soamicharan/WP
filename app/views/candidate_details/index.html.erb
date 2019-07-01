@@ -1,4 +1,15 @@
+<script>
+$(document).ready(function () {
+    $(".filter_page").hide();
+    $("#fil").click(function() {
+        $(".filter_page").toggle();
+    });
+});
+</script>
 <body style="padding-top:60px;">
+<div class="filter_page">
+<%=render "filter_menu"%>
+</div>
 <h2>Candidate Details</h2>
 <div class="table-responsive table-bordered">
 <table class="table">
@@ -6,7 +17,7 @@
     <tr>
       <th>Registration Number</th>
       <th>Name</th>
-      <th>state</th>
+      <th>State</th>
       <th>Branch</th>
       <th>Date of registration</th>
       <th>Date of closure</th>
@@ -37,7 +48,7 @@
 <br>
 <div class="text-center">
 <%= link_to 'Create', new_candidate_detail_path,class:"btn btn-default"%> |
-<%= link_to 'Filter',filter_path,class:"btn btn-default"%>
+<a class="btn btn-default" id="fil">Filter</a>
   <%if current_user && current_user.admin %>
     | <%=link_to "Admin Panel", panel_path,class: "btn btn-default" %>
   <%end %>
