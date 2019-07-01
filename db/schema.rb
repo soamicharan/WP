@@ -15,13 +15,6 @@ ActiveRecord::Schema.define(version: 2019_06_21_151118) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "books", force: :cascade do |t|
-    t.string "book_name"
-    t.integer "book_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "candidate_details", force: :cascade do |t|
     t.integer "s_no"
     t.string "src_reg"
@@ -47,30 +40,6 @@ ActiveRecord::Schema.define(version: 2019_06_21_151118) do
     t.index ["contact_no"], name: "index_candidate_details_on_contact_no", unique: true
     t.index ["email"], name: "index_candidate_details_on_email", unique: true
     t.index ["s_no"], name: "index_candidate_details_on_s_no", unique: true
-  end
-
-  create_table "names", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "posts", force: :cascade do |t|
-    t.string "name"
-    t.text "comment"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "store_names", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "test_names", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

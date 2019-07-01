@@ -9,34 +9,37 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
   <body>
-  <div class="main-w3layouts wrapper">
-  <% if notice %>
+<header id="header">
+    <nav class="navbar navbar-fixed-top" role="banner">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+          <a class="navbar-brand" href="index.html">Blazar</a>
+        </div>
+        <div class="collapse navbar-collapse navbar-right">
+          <ul class="nav navbar-nav">
+	    <% if user_signed_in? %>
+            <li class="active"><a href="#header">Dashboard</a></li>
+            <li><a href="#feature">Candidate Details</a></li>
+            <li><%= link_to 'Edit profile', edit_user_registration_path%></li>
+            <li> <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'%></li>
+	    <%end%>
+          </ul>
+        </div>
+      </div>
+      <!--/.container-->
+    </nav>
+    <!--/nav-->
+<% if notice %>
     <p class="alert alert-success"><%= notice %></p>
   <% end %>
-  <% if alert %>
-    <p class="alert alert-danger"><%= alert %></p>
-  <% end %>
-  <p class="navbar-text pull-right">
-    <% if user_signed_in? %>
-      Logged in as <strong><%= current_user.email %></strong>.
-      <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
-      <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
-    <% end %>
-  </p>
+  </header>
     <%= yield %>
 		</div>
-		<ul class="colorlib-bubbles">
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-		</ul>
-	</div>
   </body>
 </html>
