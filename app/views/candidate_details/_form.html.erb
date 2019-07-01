@@ -24,6 +24,9 @@
     <%= form.text_field :name,class: "form-control",placeholder: "Name" %>
   </div>
   <div class="form-group">
+    <%= form.select :src_reg ,["Select source of registration","R","KH"],{},{:class=> "form-control"}%>
+  </div>
+  <div class="form-group">
     <%= form.select :gender ,["Select Gender","Male","Female"],{},{:class=> "form-control"}%>
   </div>
   <div class="form-group">

@@ -1,90 +1,51 @@
-<h1>Filter Menu</h1>
+<div style="padding-top:70px;">
     <%= form_tag filter_result_path do |form| %>
       <div class="table-responsive table-bordered">
         <table class="table">
           <tbody>
           <tr>
             <td>
-              <div class="field">
-                <%= label_tag :s_no ,"S.No."%><br>
-                <%= number_field_tag :s_no %>
-              </div>
-            </td>
-            <td>
-              <div class="field">
+              <div class="form-group">
                 <%= label_tag :src_reg,"Source of registration" %>
-                <%= text_field_tag :src_reg %>
+                <%= select_tag :src_reg,options_for_select(["R","KH"]),:include_blank=>true,class: "form-control" %>
               </div>
             </td>
             <td>
-              <div class="field">
+              <div class="form-group">
                 <%= label_tag :zone ,"Zone"%>
-                <%= text_field_tag :zone %>
+                <%= text_field_tag :zone,"",class: "form-control" %>
               </div>
             </td>
             <td>
-              <div class="field">
-                <%= label_tag :DOR ,"Date of registration"%><br>
-                <%= date_field_tag :DOR %>
+              <div class="form-group">
+                <%= label_tag :DOR ,"Start Date of registration"%>
+                <%= date_field_tag :DOR ,"",class: "form-control"%>
+              </div>
+            </td>
+	    <td>
+              <div class="form-group">
+                <%= label_tag :DOR ,"End Date of registration"%>
+                <%= date_field_tag :DOR,"",class: "form-control" %>
               </div>
             </td>
           </tr>
           <tr>
             <td>
-              <div class="field">
-                <%= label_tag :reg_no ,"Registration number"%>
-                <%= text_field_tag :reg_no %>
-              </div>
-            </td>
-            <td>
-              <div class="field">
+              <div class="form-group">
                 <%= label_tag :name ,"Name"%>
-                <%= text_field_tag :name %>
+                <%= text_field_tag :name,"",class: "form-control" %>
               </div>
             </td>
+ 
             <td>
-              <div class="field">
-                <%= label_tag :gender,"Gender" %>
-                <%= text_field_tag :gender %>
-              </div>
-            </td>
-            <td>
-              <div class="field">
-                <%= label_tag :age ,"Age"%><br>
-                <%= number_field_tag :age %>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="field">
-                <%= label_tag :address ,"Address"%><br>
-                <%= text_area_tag :address %>
-              </div>
-            </td>
-            <td>
-              <div class="field">
+              <div class="form-group">
                 <%= label_tag :branch,"Branch" %>
-                <%= text_field_tag :branch %>
+                <%= text_field_tag :branch,"",class: "form-control" %>
               </div>
             </td>
             <td>
-              <div class="field">
-                <%= label_tag :email,"Email" %>
-                <%= text_field_tag :email %>
-              </div>
-            </td>
-            <td>
-              <div class="field">
-                <%= label_tag :contact_no,"Contact number" %><br>
-                <%= number_field_tag :contact_no %>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="field">
-                <%= label_tag :state,"State" %><br>
+              <div class="form-group">
+                <%= label_tag :state,"State" %>
                 <%= select_tag :state,options_for_select( ["Andhra Pradesh",
                                          "Arunachal Pradesh",
                                          "Assam",
@@ -117,45 +78,33 @@
                                          "Tripura",
                                          "Uttar Pradesh",
                                          "Uttarakhand",
-                                         "West Bengal"]),:include_blank=>true%>
+                                         "West Bengal"]),:include_blank=>true,class: "form-control"%>
               </div>
             </td>
             <td>
-              <div class="field">
-                <%= label_tag :qualification,"Qualification" %>
-                <%= text_field_tag :qualification %>
-              </div>
-            </td>
-            <td>
-              <div class="field">
-                <%= label_tag :specialization ,"Specialization"%>
-                <%= text_field_tag :specialization %>
-              </div>
-            </td>
-            <td>
-              <div class="field">
-                <%= label_tag :experience,"Experience" %>
-                <%= text_field_tag :experience %>
+              <div class="form-group">
+                <%= label_tag :remarks_mobility ,"Remarks Mobility"%>
+                <%= select_tag :remarks_mobility,options_for_select([1,2,3,4,5,6,7,8,9,10]),:include_blank=>true,class: "form-control"%>
               </div>
             </td>
           </tr>
           <tr>
             <td>
-              <div class="field">
-                <%= label_tag :remarks_mobility ,"Remarks Mobility"%><br>
-                <%= select_tag :remarks_mobility,options_for_select([1,2,3,4,5,6,7,8,9,10]),:include_blank=>true %>
+              <div class="form-group">
+                <%= label_tag :DOC ,"Start Date of closure"%>
+                <%= date_field_tag :DOC,"",class: "form-control"%>
+              </div>
+            </td>
+	    <td>
+              <div class="form-group">
+                <%= label_tag :DOC ,"Start Date of closure"%>
+                <%= date_field_tag :DOC,"",class: "form-control"%>
               </div>
             </td>
             <td>
-              <div class="field">
-                <%= label_tag :DOC ,"Date of closure"%><br>
-                <%= date_field_tag :DOC%>
-              </div>
-            </td>
-            <td>
-              <div class="field">
-                <%= label_tag :status,"Status" %><br>
-                <%= select_tag :status,options_for_select(["Pending","Joined","Joining","Studying","Not interested","Not responding"]),:include_blank=>true %>
+              <div class="form-group">
+                <%= label_tag :status,"Status" %>
+                <%= select_tag :status,options_for_select(["Pending","Joined","Joining","Studying","Not interested","Not responding"]),:include_blank=>true,class: "form-control" %>
               </div>
             </td>
             <td>
@@ -164,12 +113,13 @@
           </tr>
           </tbody>
         </table>
-      </div>
-      <div class="actions">
-        <%= submit_tag "Filter"%>
+      </div><br>
+      <div class="actions text-center">
+        <%= submit_tag "Filter",class: "btn btn-theme"%>
       </div>
     <% end %>
 
 <div class="text-center">
   <%=link_to "Back",candidate_details_path,class: "btn btn-default" %>
+</div>
 </div>
