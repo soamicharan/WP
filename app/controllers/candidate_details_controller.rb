@@ -3,13 +3,32 @@ class CandidateDetailsController < ApplicationController
   before_action :set_candidate_detail, only: [:show, :edit, :update, :destroy]
   
   def index
-    if params[:query].nil?
-	    params[:query]="SELECT * FROM candidate_details"
+    if !params[:sort].nil? 
+      if params[:q].nil?
+        @candidate_details=CandidateDetail.all
+        if params[:type]=="DESC"
+          @candidate_details=@candidate_details.sort_by(&params[:sort].to_sym).reverse
+          else
+            @candidate_details=@candidate_details.sort_by(&params[:sort].to_sym)
+          end
+        else
+          @candidate_details = CandidateDetail.find_by_sql(params[:q])
+          @qur=params[:q]
+          if params[:type]=="DESC"
+            @candidate_details=@candidate_details.sort_by(&params[:sort].to_sym).reverse
+            else
+              @candidate_details=@candidate_details.sort_by(&params[:sort].to_sym)
+            end
+        end
+      #apply sort
+    elsif !params[:query].nil?
+      @candidate_details = CandidateDetail.find_by_sql(params[:query])
+      @qur=params[:query]
+    else 
+      @candidate_details=CandidateDetail.all
     end
-    if params[:sort]!=nil && params[:type]!=nil
-      params[:query]=params[:query]+" ORDER BY "+params[:sort]+" "+params[:type]
-    end
-    @candidate_details = CandidateDetail.find_by_sql(params[:query])
+
+  
   end
   def downloadxlsx
     @candidate_details=CandidateDetail.all
@@ -21,7 +40,7 @@ class CandidateDetailsController < ApplicationController
     end
   end
   def dashboard
-    redirect_to candidate_details_path(:query => "SELECT * FROM candidate_details WHERE")
+    redirect_to candidate_details_path
   end
   def filter_result
    param_list=[:src_reg,:zone,:name,:branch,:state,:status]
@@ -49,7 +68,7 @@ class CandidateDetailsController < ApplicationController
     complete_sql_query="SELECT * FROM candidate_details WHERE "+param_query[0..param_query.length-5]+" ;"
     print complete_sql_query
     if param_query==""
-      redirect_to candidate_details_path(:query => "SELECT * FROM candidate_details"),notice: "Please fill at least one field."
+      redirect_to candidate_details_path,notice: "Please fill at least one field."
     else
       print complete_sql_query
       redirect_to candidate_details_path(:query => [complete_sql_query,param_query_list])
