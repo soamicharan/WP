@@ -1,17 +1,29 @@
-<div class="main-agileinfo">
-  <div class="agileits-top">
-    <h1>Delete User</h1>
+<div class="container" style="padding-top:50px;">
+<div class="contactForm">
+<div class="card">
+<div class="row">
+<div class="col-sm-4"></div>
+<div class="col-sm-4">
+    <h2>Delete User</h2>
+    <% if alert %>
+	<p class="alert alert-danger"><%= alert %></p>
+    <%end%>
+<% if notice %>
+    <p class="alert alert-success"><%= notice %></p>
+  <% end %>
     <%= form_tag delete_user_path do |user| %>
-      <div class="field">
-        <%= label_tag :email ,"Email"%>
-        <%= email_field_tag :email %>
+      <div class="form-field">
+        <%= email_field_tag :email,"",class: "form-control",placeholder: "Email" %>
       </div>
-      <div class="actions">
-        <%= submit_tag "Delete User" %>
+      <div class="actions text-center">
+       <br> <%= submit_tag "Delete User",class: "btn btn-default" ,data: { confirm: 'Are you sure?' } %>
       </div>
     <% end %>
   </div>
 </div>
 <div class="text-center">
   <%= link_to 'Back',panel_path,class: "btn btn-default" %>
+</div>
+</div>
+</div>
 </div>

@@ -17,19 +17,19 @@ $(document).ready(function () {
     <tr>
     <th>Registration Number</th><th id="sym"><%= link_to sanitize(" &uarr;"), :sort=>"reg_no" , :type=>"ASC",:q=> @qur  %>
     <%= link_to sanitize(" &darr;"), :sort=>"reg_no" , :type=>"DESC",:q=>@qur %></th>
-    <th>Name  </th><th id="sym"><%= link_to sanitize("&uarr;"), :sort=>"name" , :type=>"ASC",:q=> @qur %>
+    <th>Name&nbsp;</th><th id="sym"><%= link_to sanitize("&uarr;"), :sort=>"name" , :type=>"ASC",:q=> @qur %>
     <%= link_to sanitize(" &darr;"), :sort=>"name" , :type=>"DESC" ,:q=> @qur%></th>
     <th>State </th><th id="sym"><%= link_to sanitize("&uarr;"), :sort=>"state" , :type=>"ASC",:q=> @qur %>
     <%= link_to sanitize(" &darr;"), :sort=>"state" , :type=>"DESC",:q=> @qur %></th>
-    <th>Branch   </th><th id="sym"><%= link_to sanitize("&uarr;"), :sort=>"branch" , :type=>"ASC",:q=> @qur %>
+    <th>Branch&nbsp;</th><th id="sym"><%= link_to sanitize("&uarr;"), :sort=>"branch" , :type=>"ASC",:q=> @qur %>
     <%= link_to sanitize(" &darr;"), :sort=>"branch" , :type=>"DESC",:q=> @qur %></th>
     <th>Date of Registration</th><th id="sym"><%= link_to sanitize("&uarr;"), :sort=>"DOR" , :type=>"ASC",:q=> @qur %>
     <%= link_to sanitize(" &darr;"), :sort=>"DOR" , :type=>"DESC",:q=> @qur %></th>
     <th>Date of Closure</th><th id="sym"><%= link_to sanitize("&uarr;"), :sort=>"DOC" , :type=>"ASC",:q=> @qur %>
     <%= link_to sanitize(" &darr;"), :sort=>"DOC" , :type=>"DESC",:q=> @qur %></th>
-    <th>Remarks   </th><th id="sym"><%= link_to sanitize("&uarr;"), :sort=>"remarks_mobility" , :type=>"ASC",:q=> @qur %>
+    <th>Remarks&nbsp;</th><th id="sym"><%= link_to sanitize("&uarr;"), :sort=>"remarks_mobility" , :type=>"ASC",:q=> @qur %>
     <%= link_to sanitize(" &darr;"), :sort=>"remarks_mobility" , :type=>"DESC",:q=> @qur %></th>
-    <th>Status   </th><th id="sym"><%= link_to sanitize("&uarr;"), :sort=>"status" , :type=>"ASC",:q=> @qur %>
+    <th>Status&nbsp;</th><th id="sym"><%= link_to sanitize("&uarr;"), :sort=>"status" , :type=>"ASC",:q=> @qur %>
     <%= link_to sanitize(" &darr;"), :sort=>"status" , :type=>"DESC",:q=> @qur %></th>
       <th colspan="3"></th>
     </tr>
@@ -45,9 +45,9 @@ $(document).ready(function () {
 	      <td colspan="2"><%= candidate_detail.DOC %></td>
 	      <td colspan="2"><%= candidate_detail.remarks_mobility %></td>
 	      <td colspan="2"><%= candidate_detail.status %></td>
-        <td colspan="2"><%= link_to 'Read', candidate_detail,class:"btn btn-default" %>
-        | <%= link_to 'Update', edit_candidate_detail_path(candidate_detail),class:"btn btn-info" %>
-        | <%= link_to 'Delete', candidate_detail, method: :delete, data: { confirm: 'Are you sure?' },class:"btn btn-warning" %></td>
+        <td><%= link_to 'Read', candidate_detail,class:"btn btn-primary" %></td>
+        <td><%= link_to 'Update', edit_candidate_detail_path(candidate_detail),class:"btn btn-info" %></td>
+        <td><%= link_to 'Delete', candidate_detail, method: :delete, data: { confirm: 'Are you sure?' },class:"btn btn-warning" %></td>
       </tr>
     <% end %>
   </tbody>
@@ -55,12 +55,13 @@ $(document).ready(function () {
 </div>
 <br>
 <div class="text-center">
-<%= link_to 'Download as .xlsx', download_path(format: :xlsx),class:"btn btn-default" %>
+
 <%= link_to 'Create', new_candidate_detail_path,class:"btn btn-default"%> |
 <a class="btn btn-default" id="fil">Filter</a>
   <%if current_user && current_user.admin %>
     | <%=link_to "Admin Panel", panel_path,class: "btn btn-default" %>
   <%end %>
+ | <%= link_to 'Download as .xlsx', download_path(format: :xlsx),class:"btn btn-default" %>
 </div>
 </body>
 <style>
