@@ -1,4 +1,29 @@
-<div style="padding-top:70px;">
+<script>
+$(function() {
+  $('input[name="DOR"]').daterangepicker({
+    autoUpdateInput: false,
+    opens: 'center'
+  });
+  $('input[name="DOC"]').daterangepicker({
+    autoUpdateInput: false,
+    opens: 'left'
+  });
+ $('input[name="DOR"]').on('apply.daterangepicker', function(ev, picker) {
+      $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+  });
+ $('input[name="DOC"]').on('apply.daterangepicker', function(ev, picker) {
+      $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+  });
+ $('input[name="DOR"]').on('cancel.daterangepicker', function(ev, picker) {
+      $(this).val('');
+  });
+ $('input[name="DOC"]').on('cancel.daterangepicker', function(ev, picker) {
+      $(this).val('');
+  });
+
+});
+</script>
+<div style="padding-top:20px;">
     <%= form_tag filter_result_path do |form| %>
       <div class="table-responsive table-bordered">
         <table class="table">
@@ -6,46 +31,40 @@
           <tr>
             <td>
               <div class="form-group">
-                <%= label_tag :src_reg,"Source of registration" %>
-                <%= select_tag :src_reg,options_for_select(["R","KH"]),:include_blank=>true,class: "form-control" %>
+                
+                <%= select_tag :src_reg,options_for_select(["R","KH"]),:include_blank=>"Source of registration",class: "form-control" %>
               </div>
             </td>
             <td>
               <div class="form-group">
-                <%= label_tag :zone ,"Zone"%>
-                <%= text_field_tag :zone,"",class: "form-control" %>
+          
+                <%= text_field_tag :zone,"",class: "form-control", placeholder: "Zone" %>
               </div>
             </td>
             <td>
               <div class="form-group">
-                <%= label_tag :DOR ,"Start Date of registration"%>
-                <%= date_field_tag :DOR ,"",class: "form-control"%>
-              </div>
-            </td>
-	    <td>
-              <div class="form-group">
-                <%= label_tag :DOR ,"End Date of registration"%>
-                <%= date_field_tag :DOR,"",class: "form-control" %>
+                
+                <input type="text" name="DOR" id="DOR" value="" class="form-control" placeholder="Range of date of registration">
               </div>
             </td>
           </tr>
           <tr>
             <td>
               <div class="form-group">
-                <%= label_tag :name ,"Name"%>
-                <%= text_field_tag :name,"",class: "form-control" %>
+             
+                <%= text_field_tag :name,"",class: "form-control", placeholder: "Name" %>
               </div>
             </td>
  
             <td>
               <div class="form-group">
-                <%= label_tag :branch,"Branch" %>
-                <%= text_field_tag :branch,"",class: "form-control" %>
+                
+                <%= text_field_tag :branch,"",class: "form-control",placeholder: "Branch" %>
               </div>
             </td>
             <td>
               <div class="form-group">
-                <%= label_tag :state,"State" %>
+                
                 <%= select_tag :state,options_for_select( ["Andhra Pradesh",
                                          "Arunachal Pradesh",
                                          "Assam",
@@ -78,37 +97,26 @@
                                          "Tripura",
                                          "Uttar Pradesh",
                                          "Uttarakhand",
-                                         "West Bengal"]),:include_blank=>true,class: "form-control"%>
+                                         "West Bengal"]),:include_blank=>"State",class: "form-control"%>
               </div>
             </td>
-            <td>
-              <div class="form-group">
-                <%= label_tag :remarks_mobility ,"Remarks Mobility"%>
-                <%= select_tag :remarks_mobility,options_for_select([1,2,3,4,5,6,7,8,9,10]),:include_blank=>true,class: "form-control"%>
-              </div>
-            </td>
+            
           </tr>
           <tr>
             <td>
               <div class="form-group">
-                <%= label_tag :DOC ,"Start Date of closure"%>
-                <%= date_field_tag :DOC,"",class: "form-control"%>
+              
+                <%= select_tag :status,options_for_select(["Pending","Joined","Joining","Studying","Not interested","Not responding"]),:include_blank=>"Status",class: "form-control" %>
               </div>
             </td>
 	    <td>
               <div class="form-group">
-                <%= label_tag :DOC ,"Start Date of closure"%>
-                <%= date_field_tag :DOC,"",class: "form-control"%>
+               
+                <input type="text" name="DOC" id="DOC" value="" class="form-control" placeholder="Range of date of closure">
               </div>
             </td>
             <td>
-              <div class="form-group">
-                <%= label_tag :status,"Status" %>
-                <%= select_tag :status,options_for_select(["Pending","Joined","Joining","Studying","Not interested","Not responding"]),:include_blank=>true,class: "form-control" %>
-              </div>
-            </td>
-            <td>
-
+		
             </td>
           </tr>
           </tbody>
@@ -119,7 +127,10 @@
       </div>
     <% end %>
 
-<div class="text-center">
-  <%=link_to "Back",candidate_details_path,class: "btn btn-default" %>
 </div>
-</div>
+<style>
+.btn-primary{
+ margin-top:0px;
+}
+
+</style>

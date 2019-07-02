@@ -3,9 +3,14 @@ class CandidateDetailsController < ApplicationController
   before_action :set_candidate_detail, only: [:show, :edit, :update, :destroy]
   
   def index
-    @candidate_details = CandidateDetail.find_by_sql("SELECT * FROM candidate_details")
+    if params[:query].nil?
+	params[:query]="SELECT * FROM candidate_details"
+    end
+    @candidate_details = CandidateDetail.find_by_sql(params[:query])
+  end
+  def dashboard
     
-    
+    redirect_to candidate_details_path(:query => "SELECT * FROM candidate_details WHERE")
   end
   def show
   end

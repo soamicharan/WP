@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
   get 'Filter', to: "filter_page#filter_menu", as:"filter"
   post "Filter_Result",to: "filter_page#filter_result", as: "filter_result"
-
-  root 'candidate_details#index'
+  root 'candidate_details#dashboard'
   resources :candidate_details
   devise_for :users
+  
   get "Admin_Panel", to: "admin_control#admin_panel", as:"panel"
   get "Admin_Panel_Create", to:"admin_control#admin_panel_create", as:"panel_create"
   post "Admin_Panel", to: "admin_page#admin_panel"

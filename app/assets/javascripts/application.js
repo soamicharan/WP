@@ -16,3 +16,5 @@
 //= require_tree .
 //= require jquery3
 //= require bootstrap
+//= require moment
+//= require daterangepicker
