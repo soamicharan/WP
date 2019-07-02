@@ -4,12 +4,23 @@ class CandidateDetailsController < ApplicationController
   
   def index
     if params[:query].nil?
-	params[:query]="SELECT * FROM candidate_details"
+	    params[:query]="SELECT * FROM candidate_details"
+    end
+    if params[:sort]!=nil && params[:type]!=nil
+      params[:query]=params[:query]+" ORDER BY "+params[:sort]+" "+params[:type]
     end
     @candidate_details = CandidateDetail.find_by_sql(params[:query])
   end
+  def downloadxlsx
+    @candidate_details=CandidateDetail.all
+    respond_to do |format|
+      format.html
+      format.xlsx {
+        response.headers['Content-Disposition'] = 'attachment; filename="all_products.xlsx"'
+      }  
+    end
+  end
   def dashboard
-    
     redirect_to candidate_details_path(:query => "SELECT * FROM candidate_details WHERE")
   end
   def filter_result

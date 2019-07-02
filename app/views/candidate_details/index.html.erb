@@ -15,14 +15,22 @@ $(document).ready(function () {
 <table class="table">
   <thead>
     <tr>
-      <th>Registration Number</th>
-      <th>Name</th>
-      <th>State</th>
-      <th>Branch</th>
-      <th>Date of registration</th>
-      <th>Date of closure</th>
-      <th>Status</th>
-      <th>Remarks</th>
+    <th>Registration Number<%= link_to sanitize("&darr;"), :sort=>"reg_no" , :type=>"ASC" %>
+    <%= link_to sanitize("&uarr;"), :sort=>"reg_no" , :type=>"DESC" %> </th>
+    <th>Name<%= link_to sanitize("&darr;"), :sort=>"name" , :type=>"ASC" %>
+    <%= link_to sanitize("&uarr;"), :sort=>"name" , :type=>"DESC" %></th>
+    <th>State<%= link_to sanitize("&darr;"), :sort=>"state" , :type=>"ASC" %>
+    <%= link_to sanitize("&uarr;"), :sort=>"state" , :type=>"DESC" %></th>
+    <th>Branch<%= link_to sanitize("&darr;"), :sort=>"branch" , :type=>"ASC" %>
+    <%= link_to sanitize("&uarr;"), :sort=>"branch" , :type=>"DESC" %></th>
+    <th>Date of Registration<%= link_to sanitize("&darr;"), :sort=>"DOR" , :type=>"ASC" %>
+    <%= link_to sanitize("&uarr;"), :sort=>"DOR" , :type=>"DESC" %></th>
+    <th>Date of Closure<%= link_to sanitize("&darr;"), :sort=>"DOC" , :type=>"ASC" %>
+    <%= link_to sanitize("&uarr;"), :sort=>"DOC" , :type=>"DESC" %></th>
+    <th>Remarks<%= link_to sanitize("&darr;"), :sort=>"remarkS_mobility" , :type=>"ASC" %>
+    <%= link_to sanitize("&uarr;"), :sort=>"remarks_mobility" , :type=>"DESC" %></th>
+    <th>Status<%= link_to sanitize("&darr;"), :sort=>"status" , :type=>"ASC" %>
+    <%= link_to sanitize("&uarr;"), :sort=>"status" , :type=>"DESC" %></th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -33,10 +41,10 @@ $(document).ready(function () {
         <td><%= candidate_detail.name %></td>
         <td><%= candidate_detail.state %></td>
         <td><%= candidate_detail.branch %></td>
-	<td><%= candidate_detail.DOR %></td>
-	<td><%= candidate_detail.DOC %></td>
-	<td><%= candidate_detail.remarks_mobility %></td>
-	<td><%= candidate_detail.status %></td>
+        <td><%= candidate_detail.DOR %></td>
+	      <td><%= candidate_detail.DOC %></td>
+	      <td><%= candidate_detail.remarks_mobility %></td>
+	      <td><%= candidate_detail.status %></td>
         <td><%= link_to 'Read', candidate_detail,class:"btn btn-default" %>
         | <%= link_to 'Update', edit_candidate_detail_path(candidate_detail),class:"btn btn-info" %>
         | <%= link_to 'Delete', candidate_detail, method: :delete, data: { confirm: 'Are you sure?' },class:"btn btn-warning" %></td>
@@ -47,6 +55,7 @@ $(document).ready(function () {
 </div>
 <br>
 <div class="text-center">
+<%= link_to 'Download as .xlsx', download_path(format: :xlsx),class:"btn btn-default" %>
 <%= link_to 'Create', new_candidate_detail_path,class:"btn btn-default"%> |
 <a class="btn btn-default" id="fil">Filter</a>
   <%if current_user && current_user.admin %>

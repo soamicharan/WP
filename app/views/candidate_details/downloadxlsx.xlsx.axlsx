@@ -1,0 +1,8 @@
+wb=xlsx_package.workbook
+wb.add_worksheet(name: "Candidates") do |sheet|
+style1 = sheet.styles.add_style(:bg_color => "EF0920", :fg_color => "FFFFFF", b:true)
+sheet.add_row(["Reg No","Name","Age","Gender","Email","Contact No","Branch","Address","State","Status"], :style => style1)
+@candidate_details.each do |candidate|
+    sheet.add_row [candidate.reg_no,candidate.name,candidate.age,candidate.gender, candidate.email,candidate.contact_no,candidate.branch,candidate.address,candidate.state,candidate.status]
+end
+end
