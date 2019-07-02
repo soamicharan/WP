@@ -64,7 +64,34 @@ class CandidateDetailsController < ApplicationController
         param_query+='("DOC" BETWEEN ? AND ?) AND '
 	param_query_list.push(st_date,end_date)
     end
-    
+    unless params[:custom_day].blank?
+	stdays=0
+	enddays=0
+	if params[:custom_day]=="Greater than 365 days"
+		now=Date.today
+		now=now-365
+		param_query+='("DOR" <= ?) AND '
+		param_query_list.push(now)
+	elsif params[:custom_day]=="Between 180 to 365 days"
+		now=Date.today
+		st=now-180
+		en=now-365
+		param_query+='("DOR" BETWEEN ? AND ?) AND '
+		param_query_list.push(en,st)
+	elsif params[:custom_day]=="Between 60 to 180 days"
+		now=Date.today
+		st=now-60
+		en=now-180
+		param_query+='("DOR" BETWEEN ? AND ?) AND '
+		param_query_list.push(en,st)
+	else
+		now=Date.today
+		now=now-60
+		param_query+='("DOR" >= ?) AND '
+		param_query_list.push(now)
+    end
+	
+    end
     complete_sql_query="SELECT * FROM candidate_details WHERE "+param_query[0..param_query.length-5]+" ;"
     print complete_sql_query
     if param_query==""
