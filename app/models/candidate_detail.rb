@@ -11,7 +11,6 @@ class CandidateDetail < ApplicationRecord
     user=CandidateDetail.find_by_id(id)
     user.reg_no="NZ/"+sr+"/"+state.to_s+"/"+id.to_s
     user.save
-
   end
 
 end

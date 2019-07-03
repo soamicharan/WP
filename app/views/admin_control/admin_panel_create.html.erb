@@ -1,33 +1,30 @@
 <div class="container" style="padding-top:50px;">
-<div class="contactForm">
-<div class="card">
-<div class="row">
-<div class="col-sm-4"></div>
-<div class="col-sm-4">
-    <h2>Create User</h2>
-    <%= form_tag create_user_path do |user| %>
-      <div class="form-group">
-        
-        <%= email_field_tag :email,"",class: "form-control",placeholder: "Email" %>
+  <div class="contactForm">
+    <div class="card">
+      <div class="row">
+        <div class="col-sm-4"></div>
+          <div class="col-sm-4">
+            <h2>Create User</h2>
+            <%= form_tag create_user_path do |user| %>
+              <div class="form-group">
+                <%= email_field_tag :email,"",class: "form-control",placeholder: "Email" %>
+              </div>
+              <div class="form-group">  
+                <%= password_field_tag :password,"",class: "form-control",placeholder: "Password (6 characters minimum)"%>
+              </div>
+              <div class="form-group">
+                <%=password_field_tag :Password_confirmation,"",class: "form-control",placeholder: "Password confirmation" %>
+              </div>
+              <div class="actions text-center">
+                <%= submit_tag "Create User",class: "btn btn-theme" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <div class="text-center">
+          <%= link_to 'Back',panel_path,class: "btn btn-default" %>
+        </div>
       </div>
-      <div class="form-group">
-        
-        <%= password_field_tag :password,"",class: "form-control",placeholder: "Password (6 characters minimum)"%>
-      </div>
-      <div class="form-group">
-        
-        <%=password_field_tag :Password_confirmation,"",class: "form-control",placeholder: "Password confirmation" %>
-      </div>
-      <div class="actions text-center">
-        <%= submit_tag "Create User",class: "btn btn-theme" %>
-      </div>
-    <% end %>
+    </div>
   </div>
-</div>
-<div class="text-center">
-<%= link_to 'Back',panel_path,class: "btn btn-default" %>
-</div>
-</div>
-</div>
-</div>
 </div>

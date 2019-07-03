@@ -49,12 +49,12 @@ end
         end
       else
         temp=params[:q]
-      text=temp[0]
-      salt, data = text.split "$$"
-      len   = ActiveSupport::MessageEncryptor.key_len
-      key   = ActiveSupport::KeyGenerator.new(Rails.application.secrets.secret_key_base).generate_key salt, len
-      crypt = ActiveSupport::MessageEncryptor.new key
-      decrypt_query = crypt.decrypt_and_verify(data)
+        text=temp[0]
+        salt, data = text.split "$$"
+        len   = ActiveSupport::MessageEncryptor.key_len
+        key   = ActiveSupport::KeyGenerator.new(Rails.application.secrets.secret_key_base).generate_key salt, len
+        crypt = ActiveSupport::MessageEncryptor.new key
+        decrypt_query = crypt.decrypt_and_verify(data)
         @candidate_details = CandidateDetail.find_by_sql([decrypt_query,temp[1]])
         @qur=params[:q]
         if params[:type]=="DESC"
@@ -71,7 +71,6 @@ end
       key   = ActiveSupport::KeyGenerator.new(Rails.application.secrets.secret_key_base).generate_key salt, len
       crypt = ActiveSupport::MessageEncryptor.new key
       decrypt_query = crypt.decrypt_and_verify(data)
-
       @candidate_details = CandidateDetail.find_by_sql([decrypt_query,temp[1]])
       @qur=params[:query]
     else 
