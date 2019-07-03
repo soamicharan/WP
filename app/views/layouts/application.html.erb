@@ -26,7 +26,7 @@
             <ul class="nav navbar-nav">
               <% if user_signed_in? %>
                 <li><a href="/">Dashboard</a></li>
-                <li><%= link_to "Candidate Details", candidate_details_path(:query => "SELECT * FROM candidate_details")%></li>
+                <li><%= link_to "Candidate Details", candidate_details_path%></li>
                 <li><%= link_to 'Edit profile', edit_user_registration_path%></li>
                 <li> <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'%></li>
               <%end%>
