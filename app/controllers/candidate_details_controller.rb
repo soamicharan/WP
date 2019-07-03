@@ -8,8 +8,8 @@ class CandidateDetailsController < ApplicationController
         @candidate_details=CandidateDetail.all
         if params[:type]=="DESC"
           @candidate_details=@candidate_details.sort_by(&params[:sort].to_sym).reverse
-          else
-            @candidate_details=@candidate_details.sort_by(&params[:sort].to_sym)
+        else
+          @candidate_details=@candidate_details.sort_by(&params[:sort].to_sym)
         end
       else
         @candidate_details = CandidateDetail.find_by_sql(params[:q])
@@ -19,36 +19,32 @@ class CandidateDetailsController < ApplicationController
         else
           @candidate_details=@candidate_details.sort_by(&params[:sort].to_sym)
         end
-    end
-      #apply sort
+      end
     elsif !params[:query].nil?
-      @candidate_details = CandidateDetail.find_by_sql(params[:query])
+      temp=params[:query]
+      data=temp[0]
+      len   = ActiveSupport::MessageEncryptor.key_len
+      salt  = SecureRandom.random_bytes(len)
+      key   = ActiveSupport::KeyGenerator.new(Rails.application.secrets.secret_key_base).generate_key(salt, len) # => "\x89\xE0\x156\xAC..."
+      crypt = ActiveSupport::MessageEncryptor.new(key)
+      decrypt_query = crypt.decrypt_and_verify(data)
+
+      @candidate_details = CandidateDetail.find_by_sql([decrypt_query,temp[1]])
       @qur=params[:query]
     else 
       @candidate_details=CandidateDetail.all
     end
     respond_to do |format|
       format.html
-      format.xlsx {
-        response.headers['Content-Disposition'] = 'attachment; filename="candidates.xlsx"'
-      }  
+      format.xlsx {response.headers['Content-Disposition'] = 'attachment; filename="candidates.xlsx"'}  
     end
     
-  end
-
-  def downloadxlsx
-    respond_to do |format|
-      format.html
-      format.xlsx {
-        response.headers['Content-Disposition'] = 'attachment; filename="all_products.xlsx"'
-      }  
-    end
   end
   def dashboard
     redirect_to candidate_details_path
   end
   def filter_result
-   param_list=[:src_reg,:zone,:name,:branch,:state,:status]
+    param_list=[:src_reg,:zone,:name,:branch,:state,:status]
     param_string=["src_reg","zone","name","branch","state","status"]
     param_query_list=[]
     param_query=""
@@ -59,61 +55,65 @@ class CandidateDetailsController < ApplicationController
       end
     end
     unless params[:DOR].blank?
-	st_date,end_date=params[:DOR].split(' - ')
-        param_query+='("DOR" BETWEEN ? AND ?) AND '
-	param_query_list.push(st_date,end_date)
-       
+	    st_date,end_date=params[:DOR].split(' - ')
+      param_query+='("DOR" BETWEEN ? AND ?) AND '
+	    param_query_list.push(st_date,end_date)  
     end
     unless params[:DOC].blank?
-	st_date,end_date=params[:DOC].split(' - ')
-        param_query+='("DOC" BETWEEN ? AND ?) AND '
-	param_query_list.push(st_date,end_date)
+	    st_date,end_date=params[:DOC].split(' - ')
+      param_query+='("DOC" BETWEEN ? AND ?) AND '
+	    param_query_list.push(st_date,end_date)
     end
     unless params[:custom_day].blank?
-	stdays=0
-	enddays=0
-	if params[:custom_day]=="Greater than 365 days"
-		now=Date.today
-		now=now-365
-		param_query+='("DOR" <= ?) AND '
-		param_query_list.push(now)
-	elsif params[:custom_day]=="Between 180 to 365 days"
-		now=Date.today
-		st=now-180
-		en=now-365
-		param_query+='("DOR" BETWEEN ? AND ?) AND '
-		param_query_list.push(en,st)
-	elsif params[:custom_day]=="Between 60 to 180 days"
-		now=Date.today
-		st=now-60
-		en=now-180
-		param_query+='("DOR" BETWEEN ? AND ?) AND '
-		param_query_list.push(en,st)
-	else
-		now=Date.today
-		now=now-60
-		param_query+='("DOR" >= ?) AND '
-		param_query_list.push(now)
-    end
-	
+	    stdays=0
+	    enddays=0
+      if params[:custom_day]=="Greater than 365 days"
+        now=Date.today
+        now=now-365
+        param_query+='("DOR" <= ?) AND '
+        param_query_list.push(now)
+      elsif params[:custom_day]=="Between 180 to 365 days"
+        now=Date.today
+        st=now-180
+        en=now-365
+        param_query+='("DOR" BETWEEN ? AND ?) AND '
+        param_query_list.push(en,st)
+      elsif params[:custom_day]=="Between 60 to 180 days"
+        now=Date.today
+        st=now-60
+        en=now-180
+        param_query+='("DOR" BETWEEN ? AND ?) AND '
+        param_query_list.push(en,st)
+      else
+        now=Date.today
+        now=now-60
+        param_query+='("DOR" >= ?) AND '
+        param_query_list.push(now)
+      end
     end
     complete_sql_query="SELECT * FROM candidate_details WHERE "+param_query[0..param_query.length-5]+" ;"
-    print complete_sql_query
     if param_query==""
       redirect_to candidate_details_path,notice: "Please fill at least one field."
     else
-      print complete_sql_query
-      redirect_to candidate_details_path(:query => [complete_sql_query,param_query_list])
+      len   = ActiveSupport::MessageEncryptor.key_len
+      salt  = SecureRandom.random_bytes(len)
+      key   = ActiveSupport::KeyGenerator.new(Rails.application.secrets.secret_key_base).generate_key(salt, len) # => "\x89\xE0\x156\xAC..."
+      crypt = ActiveSupport::MessageEncryptor.new(key)
+      enc_query = crypt.encrypt_and_sign(complete_sql_query)
+      redirect_to candidate_details_path(:query => [enc_query,param_query_list])
     end
-
   end
+
   def show
   end
+
   def new
     @candidate_detail = CandidateDetail.new
   end
+
   def edit
   end
+
   def create
     @state_hash={
     "AP":"Andhra Pradesh",
@@ -201,7 +201,7 @@ class CandidateDetailsController < ApplicationController
     }
     respond_to do |format|
       if @candidate_detail.update(candidate_detail_params)
-        CandidateDetail.update_reg(@state_hash.key(@candidate_detail.state),@candidate_detail.id,@candidate_detail.reg_src)
+        CandidateDetail.update_reg(@state_hash.key(@candidate_detail.state),@candidate_detail.id,@candidate_detail.src_reg)
         format.html { redirect_to @candidate_detail, notice: 'Candidate details was successfully updated.' }
         format.json { render :show, status: :ok, location: @candidate_detail }
       else

@@ -98,6 +98,7 @@ hr {
   background-image: none;
   border: 1px solid transparent;
   border-radius: 4px;
+  color: #666;
   background-color: #0BA9F9;
 }
 .btn:hover {

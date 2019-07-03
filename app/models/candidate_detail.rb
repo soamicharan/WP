@@ -6,19 +6,10 @@ class CandidateDetail < ApplicationRecord
   validates :age, inclusion: {in:1..100, message: "must between 1 to 100"}
   validates :email, presence:{message:"is required."}, uniqueness: {message:"is already exist."},format:{with:/@/,message:"must contain @."}
   validates :contact_no, presence:{message:"is required."},uniqueness: {message:"is already exist."},length: {is: 10,message:"must be 10 digits."}
-  
-  def self.filter_result(sql_statement,parameter)
-    user=CandidateDetail.find_by_sql([sql_statement,parameter])
-    return user
-  end
-  def self.filter_count(sql_statement,parameter)
-    user=CandidateDetail.find_by_sql([sql_statement,parameter])
-    return user.count
-  end
-  def self.update_reg(state,id)
+  def self.update_reg(state,id,sr)
     print state.to_s
     user=CandidateDetail.find_by_id(id)
-    user.reg_no="NZ/R/"+state.to_s+"/"+id.to_s
+    user.reg_no="NZ/"+sr+"/"+state.to_s+"/"+id.to_s
     user.save
 
   end
