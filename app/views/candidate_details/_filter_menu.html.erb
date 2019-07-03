@@ -20,7 +20,6 @@ $(function() {
  $('input[name="DOC"]').on('cancel.daterangepicker', function(ev, picker) {
       $(this).val('');
   });
-
 });
 </script>
 <div style="padding-top:20px;">
@@ -30,41 +29,34 @@ $(function() {
           <tbody>
           <tr>
             <td>
-              <div class="form-group">
-                
+              <div class="form-group">                
                 <%= select_tag :src_reg,options_for_select(["R","KH"]),:include_blank=>"Source of registration",class: "form-control" %>
               </div>
             </td>
             <td>
-              <div class="form-group">
-          
+              <div class="form-group">          
                 <%= text_field_tag :zone,"",class: "form-control", placeholder: "Zone" %>
               </div>
             </td>
             <td>
-              <div class="form-group">
-                
+              <div class="form-group">                
                 <input type="text" name="DOR" id="DOR" value="" class="form-control" placeholder="Range of date of registration">
               </div>
             </td>
           </tr>
           <tr>
             <td>
-              <div class="form-group">
-             
+              <div class="form-group">             
                 <%= text_field_tag :name,"",class: "form-control", placeholder: "Name" %>
               </div>
             </td>
- 
             <td>
               <div class="form-group">
-                
                 <%= text_field_tag :branch,"",class: "form-control",placeholder: "Branch" %>
               </div>
             </td>
             <td>
-              <div class="form-group">
-                
+              <div class="form-group">                
                 <%= select_tag :state,options_for_select( ["Andhra Pradesh",
                                          "Arunachal Pradesh",
                                          "Assam",
@@ -104,25 +96,37 @@ $(function() {
           <tr>
             <td>
               <div class="form-group">
-                <%= select_tag :status,options_for_select(["Pending","Joined","Joining","Studying","Not interested","Not responding"]),:include_blank=>"Status",class: "form-control" %>
+                <%= select_tag :status,options_for_select(["Pending",
+                                                           "Joined",
+                                                           "Joining",
+                                                           "Studying",
+                                                           "Not interested",
+                                                           "Not responding"]),
+                                                           :include_blank=>"Status",class: "form-control" %>
               </div>
             </td>
-	    <td>
+	          <td>
               <div class="form-group">
                 <input type="text" name="DOC" id="DOC" value="" class="form-control" placeholder="Range of date of closure">
               </div>
             </td>
             <td>
-		<%= select_tag :custom_day,options_for_select(["Greater than 365 days","Between 180 to 365 days","Between 60 to 180 days","Less than 60 days"]),:include_blank=>"Select custom day range",class: "form-control" %>
+              <div class="form-group">
+                <%= select_tag :custom_day,options_for_select(["Greater than 365 days",
+                                                   "Between 180 to 365 days",
+                                                   "Between 60 to 180 days",
+                                                   "Less than 60 days"]),
+                                                   :include_blank=>"Select custom day range",class: "form-control" %>
+              </div>
             </td>
           </tr>
-          </tbody>
-        </table>
-      </div><br>
-      <div class="actions text-center">
-        <%= submit_tag "Filter",class: "btn btn-theme"%>
-      </div>
-    <% end %>
+        </tbody>
+      </table>
+    </div><br>
+    <div class="actions text-center">
+      <%= submit_tag "Filter",class: "btn btn-theme"%>
+    </div>
+  <% end %>
 </div>
 <style>
 .btn-primary{

@@ -14,15 +14,27 @@ class AdminControlController < ApplicationController
     end
   end
   def create_user
-    User.create_new_user(params[:email],params[:password])
-    redirect_to panel_path
+    unless params[:password].length<6
+      User.create_new_user(params[:email],params[:password])
+      redirect_to panel_path
+    else
+      render panel_create_path, notice: "Password must have minimum 6 characters"
+    end
   end
   def edit_user
-    User.edit_user(params[:prev_email],params[:email],params[:password])
-    redirect_to panel_path
+    if User.exists?(params[:prev_email])
+      User.edit_user(params[:prev_email],params[:email],params[:password])
+      redirect_to panel_path,notice: "User edited successfully"
+    else
+      render panel_path, notice: "User previous email does not exists."
+    end
   end
   def delete_user
-    User.delete_user(params[:email])
-    redirect_to panel_path
+    if User.exists?(params[:email])
+      User.delete_user(params[:email])
+      redirect_to panel_path,notice: "User deleted successfully"
+    else
+      render panel_create_path,notice: "Email does not exists"
+    end
   end
 end
