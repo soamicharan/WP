@@ -10,16 +10,16 @@ class CandidateDetailsController < ApplicationController
           @candidate_details=@candidate_details.sort_by(&params[:sort].to_sym).reverse
           else
             @candidate_details=@candidate_details.sort_by(&params[:sort].to_sym)
-          end
-        else
-          @candidate_details = CandidateDetail.find_by_sql(params[:q])
-          @qur=params[:q]
-          if params[:type]=="DESC"
-            @candidate_details=@candidate_details.sort_by(&params[:sort].to_sym).reverse
-            else
-              @candidate_details=@candidate_details.sort_by(&params[:sort].to_sym)
-            end
         end
+      else
+        @candidate_details = CandidateDetail.find_by_sql(params[:q])
+        @qur=params[:q]
+        if params[:type]=="DESC"
+          @candidate_details=@candidate_details.sort_by(&params[:sort].to_sym).reverse
+        else
+          @candidate_details=@candidate_details.sort_by(&params[:sort].to_sym)
+        end
+    end
       #apply sort
     elsif !params[:query].nil?
       @candidate_details = CandidateDetail.find_by_sql(params[:query])
@@ -27,11 +27,16 @@ class CandidateDetailsController < ApplicationController
     else 
       @candidate_details=CandidateDetail.all
     end
-
-  
+    respond_to do |format|
+      format.html
+      format.xlsx {
+        response.headers['Content-Disposition'] = 'attachment; filename="candidates.xlsx"'
+      }  
+    end
+    
   end
+
   def downloadxlsx
-    @candidate_details=CandidateDetail.all
     respond_to do |format|
       format.html
       format.xlsx {
@@ -119,7 +124,6 @@ class CandidateDetailsController < ApplicationController
     "WB":"West Bengal"
   }
     @candidate_detail = CandidateDetail.new(candidate_detail_params)
-    @candidate_detail.src_reg='R/'+@state_hash.key(@candidate_detail.state).to_s
     respond_to do |format|
       if @candidate_detail.save
         @candidate_detail.update(s_no: @candidate_detail.id)
@@ -170,7 +174,7 @@ class CandidateDetailsController < ApplicationController
     }
     respond_to do |format|
       if @candidate_detail.update(candidate_detail_params)
-        CandidateDetail.update_reg(@state_hash.key(@candidate_detail.state),@candidate_detail.id)
+        CandidateDetail.update_reg(@state_hash.key(@candidate_detail.state),@candidate_detail.id,@candidate_detail.reg_src)
         format.html { redirect_to @candidate_detail, notice: 'Candidate details was successfully updated.' }
         format.json { render :show, status: :ok, location: @candidate_detail }
       else

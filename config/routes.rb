@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   root 'candidate_details#dashboard'
   resources :candidate_details
   devise_for :users
-  get "download_candidate_details", to:"candidate_details#downloadxlsx", as:"download"
+ #"download_candidate_details", to:"candidate_details#downloadxlsx", as:"download"
   get "Admin_Panel", to: "admin_control#admin_panel", as:"panel"
   get "Admin_Panel_Create", to:"admin_control#admin_panel_create", as:"panel_create"
   post "Admin_Panel", to: "admin_page#admin_panel"
