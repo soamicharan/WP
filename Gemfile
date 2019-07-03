@@ -61,3 +61,4 @@ gem 'jquery-rails' # dependency of daterangepicker
 gem 'momentjs-rails' # dependency of daterangepicker
 gem 'bootstrap-daterangepicker-rails'
 gem 'axlsx_rails'
+gem 'annotate'

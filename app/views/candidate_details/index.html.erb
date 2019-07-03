@@ -42,7 +42,10 @@
             <td colspan="2"><%= candidate_detail.state %></td>
             <td colspan="2"><%= candidate_detail.branch %></td>
             <td colspan="2"><%= candidate_detail.DOR %></td>
-            <td colspan="2"><%= candidate_detail.DOC %></td>
+            <%begin%>
+            <td colspan="2"><%= candidate_detail.DOC%></td>
+            <%rescue%>
+            <%end%>
             <td colspan="2"><%= candidate_detail.remarks_mobility %></td>
             <td colspan="2"><%= candidate_detail.status %></td>
             <td><%= link_to 'Read', candidate_detail,class:"btn btn-primary" %></td>

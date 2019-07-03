@@ -19,7 +19,7 @@
         </td>
         <td>
           <%=label_tag "Date of registration" %> 
-          <%=@candidate_detail.DOR %>
+          <%=@candidate_detail.DOR.strftime('%e %B %Y') %>
         </td>
       </tr>
       <tr>
@@ -83,7 +83,10 @@
         </td>
         <td>
           <%=label_tag "Date of closure" %> 
-          <%=@candidate_detail.DOC %>
+          <%begin%>
+          <%=@candidate_detail.DOC.strftime('%e %B %Y') %>
+          <%rescue%><%end%>
+          <%
         </td>
         <td>
           <%=label_tag "Status" %> 

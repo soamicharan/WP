@@ -13,6 +13,7 @@ class CandidateDetailsController < ApplicationController
   end
   def index
     #---------------Logic of sorting,filter and view-------------#
+    begin
     if !params[:sort].nil?       #sort params available when clicked on sort buttons
       if params[:q].nil?        #to check whether sorting is appling on all of data or filter data
         @candidate_details=CandidateDetail.all
@@ -58,6 +59,8 @@ class CandidateDetailsController < ApplicationController
       format.html
       format.xlsx {response.headers['Content-Disposition'] = 'attachment; filename="candidates.xlsx"'}  
     end
+  rescue
+  end
   end
   def dashboard
     redirect_to candidate_details_path
