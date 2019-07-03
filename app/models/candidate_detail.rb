@@ -1,10 +1,10 @@
 class CandidateDetail < ApplicationRecord
-
+  validates :src_reg, presence:{message:"Source of registration must specified"}
   validates :name, presence:{message:"must specified."}
   validates :gender, presence:{message:"must specified."}
-  validates :gender, presence:true, inclusion: { in: ["Male", "Female"], message: 'Only male and female allowed' }
   validates :age, presence: {message:"must specified."}
-  validates :email, presence:{message:"is required."}, uniqueness: {message:"is already exist."},format:{with:/@/,message:"Email must contain @."}
+  validates :age, inclusion: {in:1..100, message: "must between 1 to 100"}
+  validates :email, presence:{message:"is required."}, uniqueness: {message:"is already exist."},format:{with:/@/,message:"must contain @."}
   validates :contact_no, presence:{message:"is required."},uniqueness: {message:"is already exist."},length: {is: 10,message:"must be 10 digits."}
   
   def self.filter_result(sql_statement,parameter)

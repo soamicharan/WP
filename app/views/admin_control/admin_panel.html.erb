@@ -1,31 +1,31 @@
 <div style="padding-top:50px;padding-left:25%;padding-right:25%;">
-<p id="notice"><%= notice %></p>
-<div  class="text-center">
-<h2>Admin Pages</h2>
-</div>
-<div class="table-responsive table-bordered">
-  <table class="table">
-    <thead>
-    <tr>
-      <th>Email</th>
-    </tr>
-    </thead>
-    <tbody>
-    <% @all_email.each do |mail| %>
-      <tr>
-        <td><%= mail.email %></td>
-      </tr>
-    <% end %>
-    </tbody>
-  </table>
-</div>
-<div class="text-center">
-  <br>
-<%= link_to 'Create User', panel_create_path, class:"btn btn-default" %> |
-<%= link_to 'Edit User', panel_edit_path,class:"btn btn-info" %> |
-<%= link_to 'Delete User',panel_delete_path,class:"btn btn-warning" %><br><br>
-<%= link_to 'Back',candidate_details_path,class: "btn btn-default" %>
-</div>
+  <p id="notice"><%= notice %></p>
+  <div  class="text-center">
+    <h2>Admin Pages</h2>
+  </div>
+  <div class="table-responsive table-bordered">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @all_email.each do |mail| %>
+          <tr>
+            <td><%= mail.email %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="text-center">
+    <br>
+    <%= link_to 'Create User', panel_create_path, class:"btn btn-default",style:"margin:10px;" %>
+    <%= link_to 'Edit User', panel_edit_path,class:"btn btn-info",style:"margin:10px;" %>
+    <%= link_to 'Delete User',panel_delete_path,class:"btn btn-warning",style:"margin:10px;" %><br>
+    <%= link_to 'Back',candidate_details_path,class: "btn btn-default",style:"margin:10px;" %>
+  </div>
 </div>
 <style>
 td,th{

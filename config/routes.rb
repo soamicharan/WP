@@ -1,10 +1,17 @@
 Rails.application.routes.draw do
+  devise_for :users
+  resources :candidate_details
+  root 'candidate_details#dashboard'
   get 'Filter', to: "filter_page#filter_menu", as:"filter"
   post "Filter_Result",to: "candidate_details#filter_result", as: "filter_result"
+<<<<<<< HEAD
   root 'candidate_details#dashboard'
   resources :candidate_details
   devise_for :users
  #"download_candidate_details", to:"candidate_details#downloadxlsx", as:"download"
+=======
+  get "download_candidate_details", to:"candidate_details#downloadxlsx", as:"download"
+>>>>>>> f0a7f2a252230a967ad01edeefd3cb9c6044d890
   get "Admin_Panel", to: "admin_control#admin_panel", as:"panel"
   get "Admin_Panel_Create", to:"admin_control#admin_panel_create", as:"panel_create"
   post "Admin_Panel", to: "admin_page#admin_panel"
