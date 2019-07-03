@@ -7,7 +7,7 @@
           <%= form_with(model: candidate_detail, local: true) do |form| %>
             <% if candidate_detail.errors.any? %>
               <div class="alert alert-warning" >
-                <h2><%= pluralize(candidate_detail.errors.count, "error") %> prohibited this candidate_detail from being saved:</h2>
+                <h2><%= pluralize(candidate_detail.errors.count, "error") %> prohibited this candidate details from being saved.</h2>
                 <ul>
                   <% candidate_detail.errors.full_messages.each do |message| %>
                     <li class="alert alert-danger"><%= message %></li>
@@ -98,7 +98,7 @@
               <%= form.date_select :DOC, {order: [:day, :month, :year],:include_blank=>true }, { class: "datetime" }%>
             </div>
             <div class="form-group">
-              <%= form.select :status,["Pending","Joined","Joining","Studying","Not interested","Not responding"],{},{:class=> "form-control"}%>
+              <%= form.select :status,["Select status","Pending","Joined","Joining","Studying","Not interested","Not responding"],{},{:class=> "form-control"}%>
             </div>
             <div class="actions text-center">
               <%= form.submit class:"btn btn-theme"%>
@@ -111,7 +111,7 @@
 </div>
 <style>
 .datetime {
-  width: 117.5px;
+  width: 116.5px;
   height: 30px;
   text-indent: 15px; 
 }
