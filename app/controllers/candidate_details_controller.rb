@@ -2,45 +2,19 @@ class CandidateDetailsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_candidate_detail, only: [:show, :edit, :update, :destroy]
   def self.state_hash
-    {
-    "AP":"Andhra Pradesh",
-    "AR":"Arunachal Pradesh",
-    "AS":"Assam",
-    "BR":"Bihar",
-    "CG":"Chhattisgarh",
-    "CH":"Chandigarh",
-    "DN":"Dadra and Nagar Haveli",
-    "DD":"Daman and Diu",
-    "DL":"Delhi",
-    "GA":"Goa",
-    "GJ":"Gujarat",
-    "HR":"Haryana",
-    "HP":"Himachal Pradesh",
-    "JK":"Jammu and Kashmir",
-    "JH":"Jharkhand",
-    "KA":"Karnataka",
-    "KL":"Kerala",
-    "MP":"Madhya Pradesh",
-    "MH":"Maharashtra",
-    "MN":"Manipur",
-    "ML":"Meghalaya",
-    "MZ":"Mizoram",
-    "NL":"Nagaland",
-    "OR":"Orissa",
-    "PB":"Punjab",
-    "PY":"Pondicherry",
-    "RJ":"Rajasthan",
-    "SK":"Sikkim",
-    "TN":"Tamil Nadu",
-    "TR":"Tripura",
-    "UP":"Uttar Pradesh",
-    "UK":"Uttarakhand",
-    "WB":"West Bengal"
+    { #state hash to their respective abbrivetions
+    "AP":"Andhra Pradesh","AR":"Arunachal Pradesh","AS":"Assam","BR":"Bihar","CG":"Chhattisgarh",
+    "DN":"Dadra and Nagar Haveli","DD":"Daman and Diu","DL":"Delhi","GA":"Goa","GJ":"Gujarat",
+    "HR":"Haryana","HP":"Himachal Pradesh","JK":"Jammu and Kashmir","JH":"Jharkhand","KA":"Karnataka","KL":"Kerala",
+    "MP":"Madhya Pradesh","MH":"Maharashtra","MN":"Manipur","ML":"Meghalaya","MZ":"Mizoram","NL":"Nagaland",
+    "OR":"Orissa","PB":"Punjab","PY":"Pondicherry","RJ":"Rajasthan","SK":"Sikkim","CH":"Chandigarh",
+    "TN":"Tamil Nadu","TR":"Tripura","UP":"Uttar Pradesh","UK":"Uttarakhand","WB":"West Bengal"
   }
-end
+  end
   def index
-    if !params[:sort].nil? 
-      if params[:q].nil?
+    #---------------Logic of sorting,filter and view-------------#
+    if !params[:sort].nil?       #sort params available when clicked on sort buttons
+      if params[:q].nil?        #to check whether sorting is appling on all of data or filter data
         @candidate_details=CandidateDetail.all
         if params[:type]=="DESC"
           @candidate_details=@candidate_details.sort_by(&params[:sort].to_sym).reverse
@@ -48,11 +22,12 @@ end
           @candidate_details=@candidate_details.sort_by(&params[:sort].to_sym)
         end
       else
+        #------------decryption of filter sql query and apply sort on that data---------------#
         temp=params[:q]
         text=temp[0]
         salt, data = text.split "$$"
-        len   = ActiveSupport::MessageEncryptor.key_len
-        key   = ActiveSupport::KeyGenerator.new(Rails.application.secrets.secret_key_base).generate_key salt, len
+        len = ActiveSupport::MessageEncryptor.key_len
+        key = ActiveSupport::KeyGenerator.new(Rails.application.secrets.secret_key_base).generate_key salt, len
         crypt = ActiveSupport::MessageEncryptor.new key
         decrypt_query = crypt.decrypt_and_verify(data)
         @candidate_details = CandidateDetail.find_by_sql([decrypt_query,temp[1]])
@@ -62,13 +37,15 @@ end
         else
           @candidate_details=@candidate_details.sort_by(&params[:sort].to_sym)
         end
+        #-------------------------------------------------------------------------------#
       end
-    elsif !params[:query].nil?
+    elsif !params[:query].nil?          #query params available when filter button is clicked
+      #-----------------------decryption of filter sql query---------------------#
       temp=params[:query]
       text=temp[0]
       salt, data = text.split "$$"
-      len   = ActiveSupport::MessageEncryptor.key_len
-      key   = ActiveSupport::KeyGenerator.new(Rails.application.secrets.secret_key_base).generate_key salt, len
+      len = ActiveSupport::MessageEncryptor.key_len
+      key = ActiveSupport::KeyGenerator.new(Rails.application.secrets.secret_key_base).generate_key salt, len
       crypt = ActiveSupport::MessageEncryptor.new key
       decrypt_query = crypt.decrypt_and_verify(data)
       @candidate_details = CandidateDetail.find_by_sql([decrypt_query,temp[1]])
@@ -76,20 +53,22 @@ end
     else 
       @candidate_details=CandidateDetail.all
     end
-    respond_to do |format|
+    #-----------------------------------------------------------------------------#
+    respond_to do |format|        #xlsx format download of data
       format.html
       format.xlsx {response.headers['Content-Disposition'] = 'attachment; filename="candidates.xlsx"'}  
     end
-    
   end
   def dashboard
     redirect_to candidate_details_path
   end
   def filter_result
+    #-------------------Filter Logic---------------------#
     param_list=[:src_reg,:zone,:name,:branch,:state,:status]
     param_string=["src_reg","zone","name","branch","state","status"]
     param_query_list=[]
     param_query=""
+    #-------------------creating SQL query with non-empty field of filter menu------------#
     for i in (0..5)
       unless params[param_list[i]].blank?
         param_query_list.push(params[param_list[i]])
@@ -133,17 +112,22 @@ end
         param_query_list.push(now)
       end
     end
-    complete_sql_query="SELECT * FROM candidate_details WHERE "+param_query[0..param_query.length-5]+" ;"
-    if param_query==""
+    #----------------------------------------------------------------------------#
+    #---------------Creating complete SQL statement with parameters---------------------#
+    complete_sql_query="SELECT * FROM candidate_details WHERE "+param_query[0..param_query.length-5]+" ;" 
+    #-----------------------------------------------------------------------------------#
+    if param_query==""    #check that whether all field of filter menu are blank or not.
       redirect_to candidate_details_path,notice: "Please fill at least one field."
     else
-      len   = ActiveSupport::MessageEncryptor.key_len
-      salt  = SecureRandom.hex len
-      key   = ActiveSupport::KeyGenerator.new(Rails.application.secrets.secret_key_base).generate_key salt, len
+      #------------Encryption of filter SQL statement and pass to candidate_details-----------------#
+      len = ActiveSupport::MessageEncryptor.key_len
+      salt = SecureRandom.hex len
+      key = ActiveSupport::KeyGenerator.new(Rails.application.secrets.secret_key_base).generate_key salt, len
       crypt = ActiveSupport::MessageEncryptor.new key
       enc_query = crypt.encrypt_and_sign(complete_sql_query)
       enc_query="#{salt}$$#{enc_query}"
       redirect_to candidate_details_path(:query => [enc_query,param_query_list])
+      #------------------------------------------------------------------------------------#
     end
   end
 
