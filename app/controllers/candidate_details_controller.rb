@@ -1,7 +1,43 @@
 class CandidateDetailsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_candidate_detail, only: [:show, :edit, :update, :destroy]
-  
+  def self.state_hash
+    {
+    "AP":"Andhra Pradesh",
+    "AR":"Arunachal Pradesh",
+    "AS":"Assam",
+    "BR":"Bihar",
+    "CG":"Chhattisgarh",
+    "CH":"Chandigarh",
+    "DN":"Dadra and Nagar Haveli",
+    "DD":"Daman and Diu",
+    "DL":"Delhi",
+    "GA":"Goa",
+    "GJ":"Gujarat",
+    "HR":"Haryana",
+    "HP":"Himachal Pradesh",
+    "JK":"Jammu and Kashmir",
+    "JH":"Jharkhand",
+    "KA":"Karnataka",
+    "KL":"Kerala",
+    "MP":"Madhya Pradesh",
+    "MH":"Maharashtra",
+    "MN":"Manipur",
+    "ML":"Meghalaya",
+    "MZ":"Mizoram",
+    "NL":"Nagaland",
+    "OR":"Orissa",
+    "PB":"Punjab",
+    "PY":"Pondicherry",
+    "RJ":"Rajasthan",
+    "SK":"Sikkim",
+    "TN":"Tamil Nadu",
+    "TR":"Tripura",
+    "UP":"Uttar Pradesh",
+    "UK":"Uttarakhand",
+    "WB":"West Bengal"
+  }
+end
   def index
     if !params[:sort].nil? 
       if params[:q].nil?
@@ -36,14 +72,6 @@ class CandidateDetailsController < ApplicationController
     
   end
 
-  def downloadxlsx
-    respond_to do |format|
-      format.html
-      format.xlsx {
-        response.headers['Content-Disposition'] = 'attachment; filename="all_products.xlsx"'
-      }  
-    end
-  end
   def dashboard
     redirect_to candidate_details_path
   end
@@ -115,46 +143,11 @@ class CandidateDetailsController < ApplicationController
   def edit
   end
   def create
-    @state_hash={
-    "AP":"Andhra Pradesh",
-    "AR":"Arunachal Pradesh",
-    "AS":"Assam",
-    "BR":"Bihar",
-    "CG":"Chhattisgarh",
-    "CH":"Chandigarh",
-    "DN":"Dadra and Nagar Haveli",
-    "DD":"Daman and Diu",
-    "DL":"Delhi",
-    "GA":"Goa",
-    "GJ":"Gujarat",
-    "HR":"Haryana",
-    "HP":"Himachal Pradesh",
-    "JK":"Jammu and Kashmir",
-    "JH":"Jharkhand",
-    "KA":"Karnataka",
-    "KL":"Kerala",
-    "MP":"Madhya Pradesh",
-    "MH":"Maharashtra",
-    "MN":"Manipur",
-    "ML":"Meghalaya",
-    "MZ":"Mizoram",
-    "NL":"Nagaland",
-    "OR":"Orissa",
-    "PB":"Punjab",
-    "PY":"Pondicherry",
-    "RJ":"Rajasthan",
-    "SK":"Sikkim",
-    "TN":"Tamil Nadu",
-    "TR":"Tripura",
-    "UP":"Uttar Pradesh",
-    "UK":"Uttarakhand",
-    "WB":"West Bengal"
-  }
     @candidate_detail = CandidateDetail.new(candidate_detail_params)
     respond_to do |format|
       if @candidate_detail.save
         @candidate_detail.update(s_no: @candidate_detail.id)
-        @candidate_detail.update(reg_no: 'NZ/'+@candidate_detail.src_reg+"/"+@candidate_detail.id.to_s)
+        @candidate_detail.update(reg_no: "NZ/"+@candidate_detail.src_reg+"/"+CandidateDetailsController.state_hash.key(@candidate_detail.state).to_s+"/"+@candidate_detail.id.to_s)
         format.html { redirect_to @candidate_detail, notice: 'Candidate detail was successfully created.' }
         format.json { render :show, status: :created, location: @candidate_detail }
       else
@@ -164,44 +157,9 @@ class CandidateDetailsController < ApplicationController
     end
   end
   def update
-    @state_hash={
-        "AP":"Andhra Pradesh",
-        "AR":"Arunachal Pradesh",
-        "AS":"Assam",
-        "BR":"Bihar",
-        "CG":"Chhattisgarh",
-        "CH":"Chandigarh",
-        "DN":"Dadra and Nagar Haveli",
-        "DD":"Daman and Diu",
-        "DL":"Delhi",
-        "GA":"Goa",
-        "GJ":"Gujarat",
-        "HR":"Haryana",
-        "HP":"Himachal Pradesh",
-        "JK":"Jammu and Kashmir",
-        "JH":"Jharkhand",
-        "KA":"Karnataka",
-        "KL":"Kerala",
-        "MP":"Madhya Pradesh",
-        "MH":"Maharashtra",
-        "MN":"Manipur",
-        "ML":"Meghalaya",
-        "MZ":"Mizoram",
-        "NL":"Nagaland",
-        "OR":"Orissa",
-        "PB":"Punjab",
-        "PY":"Pondicherry",
-        "RJ":"Rajasthan",
-        "SK":"Sikkim",
-        "TN":"Tamil Nadu",
-        "TR":"Tripura",
-        "UP":"Uttar Pradesh",
-        "UK":"Uttarakhand",
-        "WB":"West Bengal"
-    }
     respond_to do |format|
       if @candidate_detail.update(candidate_detail_params)
-        CandidateDetail.update_reg(@state_hash.key(@candidate_detail.state),@candidate_detail.id,@candidate_detail.reg_src)
+        @candidate_detail.update(reg_no: "NZ/"+@candidate_detail.src_reg+"/"+CandidateDetailsController.state_hash.key(@candidate_detail.state).to_s+"/"+@candidate_detail.id.to_s)
         format.html { redirect_to @candidate_detail, notice: 'Candidate details was successfully updated.' }
         format.json { render :show, status: :ok, location: @candidate_detail }
       else
