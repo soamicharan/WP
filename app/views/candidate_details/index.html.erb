@@ -61,7 +61,7 @@ $(document).ready(function () {
   <%if current_user && current_user.admin %>
     | <%=link_to "Admin Panel", panel_path,class: "btn btn-default" %>
   <%end %>
- | <%= link_to 'Download as .xlsx',:format=>:xlsx,:query=> @qur,class:"btn btn-default" %>
+ | <%= link_to 'Download as .xlsx',candidate_details_path(:format=>:xlsx,:query=> @qur),class:"btn btn-default" %>
 </div>
 </body>
 <style>
